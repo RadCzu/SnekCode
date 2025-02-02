@@ -19,7 +19,7 @@ public class Snake {
 
     public Snake(int x, int y, Map map){
         TileBuilder tileBuilder = new();
-        head = tileBuilder.BuildSnakeHead(map.GetTile(x, y), this);
+        head = tileBuilder.BuildSnakeHead(this, map.GetTile(x, y));
         map.GetTile(x, y).SetContent(head);
         this.map = map;
         length = 1;
@@ -118,7 +118,7 @@ public class Snake {
     {
         SnakePart lastPart = head.GetLast();
         TileBuilder tileBuilder = new();
-        SnakePart newBody = tileBuilder.BuildSnakeBody(tile, this);
+        SnakePart newBody = tileBuilder.BuildSnakeBody(this, tile);
         tile.SetContent(newBody);
         lastPart.next = newBody;
         newBody.previous = lastPart;

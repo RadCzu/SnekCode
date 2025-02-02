@@ -152,7 +152,7 @@ public Tile GetRandomEmptyTile()
     {
         if (active)
         {
-            snake.direction = new UnityEngine.Vector2Int(0, 1);
+            snake.direction = new UnityEngine.Vector2Int(0, -1);
         }
     }
 
@@ -160,7 +160,7 @@ public Tile GetRandomEmptyTile()
     {
         if (active)
         {
-            snake.direction = new UnityEngine.Vector2Int(0, -1);
+            snake.direction = new UnityEngine.Vector2Int(0, 1);
         }
     }
 
@@ -172,17 +172,25 @@ public Tile GetRandomEmptyTile()
         }
     }
 
-    public void Input(int number)
+    public void Input(int number, Snake movingSnake)
     {
         if (snakes.Count == 0) return;
 
-        var snake = snakes[0]; // Assuming single-player for simplicity
+        Snake theSnake = null;
+        foreach(Snake _snake in snakes) {
+            if(movingSnake == _snake) {
+                theSnake = movingSnake;
+            }
+        }
+
+        if (theSnake == null) return;
+
         switch (number)
         {
-            case 0: Left(snake); break;
-            case 1: Right(snake); break;
-            case 2: Up(snake); break;
-            case 3: Down(snake); break;
+            case 0: Left(theSnake); break;
+            case 1: Right(theSnake); break;
+            case 2: Up(theSnake); break;
+            case 3: Down(theSnake); break;
             default:
                 Stop();
                 break;

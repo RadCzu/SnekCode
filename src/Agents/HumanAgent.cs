@@ -1,3 +1,4 @@
+using UnityEditor.UI;
 using UnityEngine;
 
 public class HumanAgent: SnakeAgent
@@ -9,43 +10,31 @@ public class HumanAgent: SnakeAgent
     public HumanAgent(ArrowKeyController controller) {
       arrowKeyController = controller;
 
-      arrowKeyController.OnUpArrowPress = MoveUp;
-      arrowKeyController.OnDownArrowPress = MoveDown;
-      arrowKeyController.OnLeftArrowPress = MoveLeft;
-      arrowKeyController.OnRightArrowPress = MoveRight;
+
     }
 
-    void MoveUp()
+    void MoveUp(Game game)
     {
-        snake.direction = Vector2Int.down;
+        game.Input(2, snake);
     }
 
-    void MoveDown()
+    void MoveDown(Game game)
     {
-        snake.direction = Vector2Int.up;
+        game.Input(3, snake);
     }
 
-    void MoveLeft()
+    void MoveLeft(Game game)
     {
-        snake.direction = Vector2Int.left;
+        game.Input(0, snake);
     }
 
-    void MoveRight()
+    void MoveRight(Game game)
     {
-        snake.direction = Vector2Int.right;
+         game.Input(1, snake);
     }
 
-    public override int GetCookies()
-    {
-        return 0;
-    }
 
     public override void MakeDecision(Game game)
-    {
-
-    }
-
-    public override void Validate(Game game)
     {
 
     }
@@ -57,7 +46,10 @@ public class HumanAgent: SnakeAgent
 
     public override void OnInit(Game game)
     {
-        
+      arrowKeyController.OnUpArrowPress = () => MoveUp(game);
+      arrowKeyController.OnDownArrowPress = () => MoveDown(game);
+      arrowKeyController.OnLeftArrowPress = () =>  MoveLeft(game);
+      arrowKeyController.OnRightArrowPress = () =>  MoveRight(game);
     }
 
     public override void ForceMove(Game game)

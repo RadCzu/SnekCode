@@ -32,7 +32,6 @@ public class Main
             var agent = agentInfo.Item1;
             this.agents.Add(agent);
             agentPositions.Add(new Vector2Int(agentInfo.Item2, agentInfo.Item3));
-            agent.OnInit(game); 
         }
     }
 
@@ -60,7 +59,7 @@ public class Main
         for(int i = 0; i < game.snakes.Count; i++)
         {
             agents[i].SetSnake(game.snakes[i]);
-            game.snakes[i].onDeath.Subscribe(() => game.GameOver());
+            agents[i].OnInit(game);
         }
 
         return game;
@@ -106,7 +105,9 @@ public class Main
 
     public void Tick()
     {
+
         int living = agents.Count;
+
         foreach (var agent in agents) {   
             agent.snake.moved = false;
         }

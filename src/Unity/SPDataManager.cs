@@ -4,7 +4,6 @@ using System;
 
 public class SPDataManager : MonoBehaviour
 {
-
     public Counter widthCounter;
     public Counter heightCounter;
     public Counter plusCounter;
@@ -68,8 +67,8 @@ public class SPDataManager : MonoBehaviour
     public void Transition2Scene(string sceneName)
     {
         if (IsCorrect()) {
-            SceneManager.LoadScene(sceneName);
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            GameOptions.singleplayer = true;
+            SceneTransitioner.Transition2Scene(sceneName);
         } else {
             Debug.Log("Wrong input");
         }

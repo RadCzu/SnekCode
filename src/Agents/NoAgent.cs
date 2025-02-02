@@ -1,17 +1,7 @@
 public class NoAgent: SnakeAgent
 {
 
-    public override int GetCookies()
-    {
-        return 0;
-    }
-
     public override void MakeDecision(Game game)
-    {
-
-    }
-
-    public override void Validate(Game game)
     {
 
     }

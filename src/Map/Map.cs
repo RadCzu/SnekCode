@@ -1,12 +1,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
+using OpenCvSharp;
 
 public class Map
 {
-    public List<List<Tile>> state = new();
+    private List<List<Tile>> state = new();
 
     public Map(List<List<Tile>> state)
     {
@@ -58,6 +58,10 @@ public class Map
         }
     }
 
+    public Vector2Int GetMapSize() {
+        return new Vector2Int(state.Count, state[0].Count);
+    }
+
     public void MoveTileByCoordinates(int x1, int y1, int x2, int y2)
     {
         Tile tile1 = GetTile(x1, y1);
@@ -99,6 +103,21 @@ public class Map
         return tempMap;
     }
 
+    public static List<List<float[]>> NormalizeFragment(List<List<Tile>> fragment) {
+        int numRows = fragment.Count;
+        int numCols = numRows > 0 ? fragment[0].Count : 0;
+
+        List<List<float[]>> normMap = new();
+        for (int row = 0; row < numRows; row++) {
+            List<float[]> normRow = new();
+            for (int col = 0; col < numCols; col++) {
+                normRow.Add(fragment[row][col].GetContent().ToNumbers());
+            }
+            normMap.Add(normRow);
+        }
+        return normMap;
+    }
+
     public int GetPlayableWidth() {
         return state.Count - 2;
     }
@@ -106,5 +125,39 @@ public class Map
     public int GetPlayableHeight() {
         return state[0].Count - 2;
     }
-    
+
+    public static List<List<float[]>> ResizeFragment(List<List<float[]>> normalizedFragment, int width, int height)
+    {
+        int originalWidth = normalizedFragment[0].Count;
+        int originalHeight = normalizedFragment.Count;
+
+        Mat mat = new Mat(originalHeight, originalWidth, MatType.CV_32FC3);
+
+        for (int y = 0; y < originalHeight; y++)
+        {
+            for (int x = 0; x < originalWidth; x++)
+            {
+                var color = normalizedFragment[y][x];
+                mat.Set(y, x, new Vec3f(color[0], color[1], color[2]));
+            }
+        }
+
+        Mat resizedMat = new Mat();
+        Cv2.Resize(mat, resizedMat, new OpenCvSharp.Size(width, height), 0, 0, InterpolationFlags.Linear);
+
+        List<List<float[]>> resizedFragment = new List<List<float[]>>();
+
+        for (int y = 0; y < height; y++)
+        {
+            List<float[]> row = new List<float[]>();
+            for (int x = 0; x < width; x++)
+            {
+                Vec3f pixel = resizedMat.At<Vec3f>(y, x);
+                row.Add(new float[] { pixel.Item0, pixel.Item1, pixel.Item2 });
+            }
+            resizedFragment.Add(row);
+        }
+
+        return resizedFragment;
+    }
 }
