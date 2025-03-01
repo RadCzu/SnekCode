@@ -22,11 +22,11 @@ public class AIAgent : SnakeAgent
     public override void OnInit(Game game)
     {
         snake.onDeath.Subscribe(() => ClearHistory());
+        snake.onDeath.Subscribe(() => {brainNetwork.Dispose();});
     }
 
     public override void MakeDecision(Game game)
     {
-        Debug.Log("Agent Deciding");
         var possibleMoves = new List<float[]>
         {
             new[] { 1.0f, 0, 0, 0 },
@@ -55,6 +55,13 @@ public class AIAgent : SnakeAgent
 
             qValues.Add(qValue);
         }
+
+        // string concat = "";
+        // foreach (var qValue in qValues)
+        // {
+        //     concat = concat + qValue + ", ";
+        // }
+        // Debug.Log($"Q_Values: {concat}");
         
         int bestMoveIndex = movePickingStrategy.PickMove(qValues.ToArray());
         var bestMove = possibleMoves[bestMoveIndex];
@@ -168,18 +175,6 @@ public class AIAgent : SnakeAgent
 
         var historyData = moveHistory.SelectMany(h => new float[] { h.Item1, h.Item2, h.Item3, h.Item4, h.Item5, h.Item6 ? 1.0f : 0 }).ToArray();
         var historyTensor = new Tensor(new int[] { 1, moveHistory.Count * 6 }, historyData);
-
-        Debug.Log("map64Tensor: " + map64Tensor.ToString());
-        Debug.Log("fragmentTensor: " + fragmentTensor.ToString());
-        Debug.Log("deathTensor: " + deathTensor.ToString());
-        Debug.Log("closestFoodTensor: " + closestFoodTensor.ToString());
-        Debug.Log("historyTensor: " + historyTensor.ToString());
-
-        Debug.Log("map64Tensor data: " + map64Tensor.DataToString());
-        Debug.Log("fragmentTensor data: " + fragmentTensor.DataToString());
-        Debug.Log("deathTensor data: " + deathTensor.DataToString());
-        Debug.Log("closestFoodTensor data: " + closestFoodTensor.DataToString());
-        Debug.Log("historyTensor data: " + historyTensor.DataToString());
 
         return (map64Tensor, fragmentTensor, deathTensor, closestFoodTensor, historyTensor);
     }

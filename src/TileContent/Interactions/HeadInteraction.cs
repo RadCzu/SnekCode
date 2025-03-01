@@ -19,7 +19,7 @@ public class HeadInteraction : IInteractionStrategy
                 // If mySnake has a next part, the other snake dies on collision
                 snake.onDeath.Notify();
                 snake.head.GetTile().SetContent(mySnake.head);
-                snake.head.SetTile(null);
+                // snake.head.SetTile(null);
             }
             else
             {
@@ -28,8 +28,8 @@ public class HeadInteraction : IInteractionStrategy
                 {
                     snake.onDeath.Notify();
                     mySnake.onDeath.Notify();
-                    mySnake.head.GetTile().SetContent(null);
-                    snake.head.GetTile().SetContent(null);
+                    // mySnake.head.GetTile().SetContent(null);
+                    // snake.head.GetTile().SetContent(null);
                 }
                 return;
             }
@@ -38,9 +38,9 @@ public class HeadInteraction : IInteractionStrategy
         {
             // Handle regular collisions for moving snakes
             mySnake.onDeath.Notify();
-            mySnake.head.GetTile().SetContent(null);
+            // mySnake.head.GetTile().SetContent(null);
             snake.onDeath.Notify();
-            snake.head.GetTile().SetContent(null);
+            // snake.head.GetTile().SetContent(null);
         }
     }
 }

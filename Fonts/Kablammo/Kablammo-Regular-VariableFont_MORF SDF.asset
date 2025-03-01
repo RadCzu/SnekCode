@@ -459,6 +459,10 @@ MonoBehaviour:
     m_GlyphIndex: 111
     m_Scale: 1
   - m_ElementType: 1
+    m_Unicode: 78
+    m_GlyphIndex: 113
+    m_Scale: 1
+  - m_ElementType: 1
     m_Unicode: 79
     m_GlyphIndex: 123
     m_Scale: 1
@@ -469,6 +473,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 83
     m_GlyphIndex: 169
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 84
+    m_GlyphIndex: 181
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 86
@@ -537,6 +545,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 117
     m_GlyphIndex: 188
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 119
+    m_GlyphIndex: 212
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 120

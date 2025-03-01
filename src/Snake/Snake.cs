@@ -24,6 +24,8 @@ public class Snake {
         this.map = map;
         length = 1;
         score = 0;
+        
+        onDeath.Subscribe(() => {this.dead = true;} );
     }
 
     public void ValidateSnake()
@@ -69,7 +71,9 @@ public class Snake {
         }
     }
 
-    public void Move() {
+    public void Move()
+    {
+        //ValidateSnake();
         onMove.Notify();
         Tile headTile = head.GetTile();
         Vector2Int position = headTile.GetPosition();
@@ -82,16 +86,13 @@ public class Snake {
         backTile = lastPart.GetTile();
         previousDirection = direction;
         map.MoveTileByCoordinates(position.x, position.y, position.x + direction.x, position.y + direction.y);
-
+        
         if (lastPart != head){
             Vector2Int lastPartPosition = lastPart.GetTile().GetPosition();
             map.MoveTileByCoordinates(lastPartPosition.x, lastPartPosition.y, position.x, position.y);
             SnakePart second2Last = head.GetSecondToLast();
 
             if (second2Last == head) {
-                // Debug.Log($"New part positions for length {length}");
-                // Debug.Log($"Head: {head.GetTile().GetPosition()} Head's next: {head.next?.GetTile().GetPosition() ?? null}");
-                // Debug.Log($"Second: {lastPart.GetTile().GetPosition()} Seconds's next: {lastPart.next?.GetTile().GetPosition() ?? null}");
                 content.Interact(this);
                 return;
             }
@@ -135,7 +136,7 @@ public class Snake {
             try {
                 Tile tile = c.GetTile();
                 ITileable content = tile.GetContent();
-                if (content is SnakePart) { // Check if the content is of type SnakePart
+                if (content == c) { 
                     tile.SetContent(empty);
                 }
             } catch (Exception e) {

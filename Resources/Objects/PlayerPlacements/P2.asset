@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: P2
   m_EditorClassIdentifier: 
   position: {x: 0.5, y: 0.75}
+  playerColor: {r: 0, g: 0.10012603, b: 1, a: 1}

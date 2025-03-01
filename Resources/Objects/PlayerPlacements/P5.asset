@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e81125812da3c4b817171687953d0f, type: 3}
   m_Name: P5
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0}
+  position: {x: 0.5, y: 0.5}
+  playerColor: {r: 0.77335304, g: 0, b: 0.7830189, a: 1}

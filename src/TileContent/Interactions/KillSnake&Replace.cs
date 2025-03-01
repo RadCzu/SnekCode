@@ -11,6 +11,5 @@ public class KillSnakeAndReplace : IInteractionStrategy
   public void Execute(Snake snake) {
     snake.onDeath.Notify();
     snake.head.GetTile().SetContent(replacement);
-    return;
   }
 }

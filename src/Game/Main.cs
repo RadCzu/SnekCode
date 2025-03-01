@@ -123,8 +123,8 @@ public class Main
                 living--;
                 continue;
             }
-            agent.ForceMove(game);
             agent.MakeDecision(game);
+            agent.ForceMove(game);
         }
 
         game.snakeEliminator.Notify();
